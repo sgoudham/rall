@@ -1,0 +1,23 @@
+[package]
+name = "rall"
+version = "0.1.0"
+edition = "2021"
+authors = ["Goudham Suresh <sgoudham@gmail.com>"]
+description = "Really...? Another Logging Library? Yes! Incredibly Intuitive & Simple"
+license = "MIT"
+readme = "README.md"
+repository = "https://github.com/sgoudham/rall"
+keywords = ["logger", "logging", "simple", "coloured", "color"]
+categories = ["development-tools::debugging"]
+
+[dependencies]
+embed-doc-image = "0.1.4"
+termcolor = "1.1.3"
+
+[features]
+doc-images = []
+
+[package.metadata.docs.rs]
+# docs.rs uses a nightly compiler, so by instructing it to use our `doc-images` feature we
+# ensure that it will render any images that we may have in inner attribute documentation.
+features = ["doc-images"]
