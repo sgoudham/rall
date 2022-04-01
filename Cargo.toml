@@ -9,6 +9,7 @@ readme = "README.md"
 repository = "https://github.com/sgoudham/rall"
 keywords = ["logger", "logging", "simple", "coloured", "color"]
 categories = ["development-tools::debugging"]
+exclude = [".github/**"]
 
 [dependencies]
 embed-doc-image = "0.1.4"
