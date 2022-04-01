@@ -23,7 +23,7 @@ And much more to come... soon™!
 use rall::SimpleLogger;
 
 // Create Default SimpleLogger
-let mut simple_logger = SimpleLogger::default ();
+let mut simple_logger = SimpleLogger::default();
 
 // Log Out To Standard Output
 logger.log(Level::TRACE, "My Best Friend Hazel :D");
