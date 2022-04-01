@@ -1,8 +1,13 @@
+[![build](https://github.com/sgoudham/rall/actions/workflows/build.yml/badge.svg)](https://github.com/sgoudham/rall/actions/workflows/build.yml)
+[![crate.io](https://img.shields.io/crates/v/rall)](https://crates.io/crates/rall)
+[![downloads](https://img.shields.io/crates/d/rall)](https://crates.io/crates/rall)
+[![license](https://img.shields.io/github/license/sgoudham/rall)](LICENSE)
+
 # Really...? Another Logging Library?
 
 **Yes! :P**
 
-> _rall_ is an incredibly simple and intuitive logger, consider this crate a _failure_ if you can't get setup within **30 seconds!**
+> rall is an incredibly simple and intuitive logger, consider this crate a _failure_ if you can't get setup within **30 seconds!**
 
 ## Feature Set
 
@@ -20,7 +25,7 @@ And much more to come... soon™!
 use rall::SimpleLogger;
 
 // Create Default SimpleLogger
-let mut simple_logger = SimpleLogger::default ();
+let mut simple_logger = SimpleLogger::default();
 
 // Log Out To Standard Output
 logger.log(Level::TRACE, "My Best Friend Hazel :D");
