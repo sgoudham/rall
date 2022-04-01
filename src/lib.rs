@@ -49,7 +49,7 @@ doc = ::embed_doc_image::embed_image!("windows_logs", "images/windows_logs.png")
 //! ### Author Notes
 //!
 //! I'm still incredibly early in my Rust journey and so I wanted to get comfortable and try to pick
-//! my own brain about exposing different API's in a Rust crate. I hope to achieve an intuitive and
+//! my own brain about exposing different API's in a Rust crate. I hope to expose an intuitive and
 //! easy to understand API design that users can instantly get started with.
 
 use std::fmt::{Display, Formatter};
