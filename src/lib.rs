@@ -123,11 +123,7 @@ impl SimpleLogger {
                 .unwrap(),
             Level::WARN => self
                 .standard_stream
-                .set_color(
-                    ColorSpec::new()
-                        .set_fg(Some(Color::Yellow))
-                        .set_dimmed(true),
-                )
+                .set_color(ColorSpec::new().set_fg(Some(Color::Yellow)))
                 .unwrap(),
             Level::ERROR => self
                 .standard_stream
