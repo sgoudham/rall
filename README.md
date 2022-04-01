@@ -1,2 +1,49 @@
-# rall
-Really...? Another Logging Library? Yes! This time written in Rust
+# Really...? Another Logging Library?
+
+**Yes! :P**
+
+## Description
+
+_rall_ is an incredibly simple and intuitive logger, consider this crate a _failure_ if you can't get setup within **30
+seconds!**
+
+## Feature Set
+
+- [x] Logging Levels
+- [x] Coloured Output
+- [ ] Options for Datetime, Current Function, Line Number, Custom Colours, etc.
+- [ ] Custom Formatting
+- [ ] File support
+
+And much more to come... soon™!
+
+## Quick Start
+
+```rust
+use rall::SimpleLogger;
+
+// Create Default SimpleLogger
+let mut simple_logger = SimpleLogger::default ();
+
+// Log Out To Standard Output
+logger.log(Level::TRACE, "My Best Friend Hazel :D");
+logger.log(Level::DEBUG, "My Best Friend Hazel :D");
+logger.log(Level::INFO, "My Best Friend Hazel :D");
+logger.log(Level::WARN, "My Best Friend Hazel :D");
+logger.log(Level::ERROR, "My Best Friend Hazel :D");
+logger.log(Level::CRITICAL, "My Best Friend Hazel :D");
+```
+
+### Windows Output
+
+![Windows Logs](images/windows_logs.png)
+
+### Unix Output
+
+![Unix Logs](images/unix_logs.png)
+
+### Author Notes
+
+I'm still incredibly early in my Rust journey and so I wanted to get comfortable and try to pick my own brain about
+exposing different API's in a Rust crate. I hope to expose an intuitive and easy to understand API design that users can
+instantly get started with.
