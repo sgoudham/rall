@@ -36,15 +36,16 @@
 //!
 #![cfg_attr(feature = "doc-images",
 cfg_attr(all(),
-doc = ::embed_doc_image::embed_image!("windows_logs", "images/windows_logs.png")))]
+doc = ::embed_doc_image::embed_image!("windows_logs", "images/windows_logs.png"),
+doc = ::embed_doc_image::embed_image!("unix_logs", "images/unix_logs.png")))]
 //!
 //! ### Windows Output
 //!
-//! ![Example Logs][windows_logs]
+//! ![Windows Logs][windows_logs]
 //!
 //! ### Unix Output
 //!
-//!
+//! ![Unix Logs][unix_logs]
 //!
 //! ### Author Notes
 //!
