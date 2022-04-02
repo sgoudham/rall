@@ -1,4 +1,4 @@
-[![build](https://github.com/sgoudham/rall/actions/workflows/build.yml/badge.svg)](https://github.com/sgoudham/rall/actions/workflows/build.yml)
+[![build](https://github.com/sgoudham/rall/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/sgoudham/rall/actions/workflows/build.yml)
 [![crate.io](https://img.shields.io/crates/v/rall)](https://crates.io/crates/rall)
 [![downloads](https://img.shields.io/crates/d/rall)](https://crates.io/crates/rall)
 [![license](https://img.shields.io/github/license/sgoudham/rall)](LICENSE)
@@ -22,10 +22,10 @@ And much more to come... soon™!
 ## Quick Start
 
 ```rust
-use rall::SimpleLogger;
+use rall::{SimpleLogger, Level};
 
 // Create Default SimpleLogger
-let mut simple_logger = SimpleLogger::default();
+let mut logger = SimpleLogger::default();
 
 // Log Out To Standard Output
 logger.log(Level::TRACE, "My Best Friend Hazel :D");
