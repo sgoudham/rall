@@ -20,10 +20,10 @@
 //! ## Quick Start
 //!
 //! ```rust
-//! use rall::SimpleLogger;
+//! use rall::{SimpleLogger, Level};
 //!
 //! // Create Default SimpleLogger
-//! let mut simple_logger = SimpleLogger::default();
+//! let mut logger = SimpleLogger::default();
 //!
 //! // Log Out To Standard Output
 //! logger.log(Level::TRACE, "My Best Friend Hazel :D");
