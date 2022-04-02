@@ -1,6 +1,6 @@
 [package]
 name = "rall"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2021"
 authors = ["Goudham Suresh <sgoudham@gmail.com>"]
 description = "Really...? Another Logging Library? Yes! Incredibly Intuitive & Simple"
