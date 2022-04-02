@@ -31,7 +31,7 @@
 //! logger.log(Level::INFO, "My Best Friend Hazel :D");
 //! logger.log(Level::WARN, "My Best Friend Hazel :D");
 //! logger.log(Level::ERROR, "My Best Friend Hazel :D");
-//! logger.log(Level::CRITICAL, "My Best Friend Hazel :D");
+//! logger.log(Level::FATAL, "My Best Friend Hazel :D");
 //! ```
 //!
 #![cfg_attr(feature = "doc-images",
@@ -64,7 +64,7 @@ pub enum Level {
     INFO,
     WARN,
     ERROR,
-    CRITICAL,
+    FATAL,
 }
 
 impl Display for Level {
@@ -75,7 +75,7 @@ impl Display for Level {
             Level::INFO => write!(f, "[INFO]"),
             Level::WARN => write!(f, "[WARN]"),
             Level::ERROR => write!(f, "[ERROR]"),
-            Level::CRITICAL => write!(f, "[FATAL]"),
+            Level::FATAL => write!(f, "[FATAL]"),
         }
     }
 }
@@ -130,7 +130,7 @@ impl SimpleLogger {
                 .standard_stream
                 .set_color(ColorSpec::new().set_fg(Some(Color::Red)).set_intense(true))
                 .unwrap(),
-            Level::CRITICAL => self
+            Level::FATAL => self
                 .standard_stream
                 .set_color(ColorSpec::new().set_fg(Some(Color::Red)).set_bold(true))
                 .unwrap(),
