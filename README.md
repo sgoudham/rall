@@ -33,7 +33,7 @@ logger.log(Level::DEBUG, "My Best Friend Hazel :D");
 logger.log(Level::INFO, "My Best Friend Hazel :D");
 logger.log(Level::WARN, "My Best Friend Hazel :D");
 logger.log(Level::ERROR, "My Best Friend Hazel :D");
-logger.log(Level::CRITICAL, "My Best Friend Hazel :D");
+logger.log(Level::FATAL, "My Best Friend Hazel :D");
 ```
 
 ### Windows Output
