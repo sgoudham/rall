@@ -22,18 +22,15 @@ And much more to come... soon™!
 ## Quick Start
 
 ```rust
-use rall::{SimpleLogger, Level};
-
-// Create Default SimpleLogger
-let mut logger = SimpleLogger::default();
+use rall::{debug, error, fatal, info, trace, warn};
 
 // Log Out To Standard Output
-logger.log(Level::TRACE, "My Best Friend Hazel :D");
-logger.log(Level::DEBUG, "My Best Friend Hazel :D");
-logger.log(Level::INFO, "My Best Friend Hazel :D");
-logger.log(Level::WARN, "My Best Friend Hazel :D");
-logger.log(Level::ERROR, "My Best Friend Hazel :D");
-logger.log(Level::FATAL, "My Best Friend Hazel :D");
+trace!("My Best Friend Hazel :D");
+debug!("My Best Friend Hazel :D");
+info!("My Best Friend Hazel :D");
+warn!("My Best Friend Hazel :D");
+error!("My Best Friend Hazel :D");
+fatal!("My Best Friend Hazel :D");
 ```
 
 ### Windows Output
