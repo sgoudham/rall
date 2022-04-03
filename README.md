@@ -14,7 +14,7 @@
 - [x] Logging Levels
 - [x] Coloured Output
 - [ ] Options for Datetime, Current Function, Line Number, Custom Colours, etc.
-- [ ] Custom Formatting
+- [x] Custom Formatting
 - [ ] File support
 
 And much more to come... soon™!

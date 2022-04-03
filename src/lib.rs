@@ -12,7 +12,7 @@
 //! - [x] Logging Levels
 //! - [x] Datetime & Coloured Output
 //! - [ ] Options for Datetime, Current Function, Line Number, Custom Colours, etc.
-//! - [ ] Custom Formatting
+//! - [x] Custom Formatting
 //! - [ ] File support
 //!
 //! And much more to come... soon™!
@@ -158,7 +158,7 @@ impl Display for Level {
 /// ```
 #[macro_export]
 macro_rules! trace {
-    ($str:expr) => {{
+    ($($arg:tt)*) => {{
         use std::io::Write;
         use termcolor::WriteColor;
 
@@ -171,7 +171,7 @@ macro_rules! trace {
                     .set_bold(true),
             )
             .unwrap();
-        writeln!(&mut stream, "[{} {}] {}", now, rall::Level::TRACE, $str).unwrap();
+        writeln!(&mut stream, "[{} {}] {}", now, rall::Level::TRACE, format_args!($($arg)*)).unwrap();
         stream.reset().unwrap();
     }};
 }
@@ -193,7 +193,7 @@ macro_rules! trace {
 /// ```
 #[macro_export]
 macro_rules! debug {
-    ($str:expr) => {{
+    ($($arg:tt)*) => {{
         use std::io::Write;
         use termcolor::WriteColor;
 
@@ -206,7 +206,7 @@ macro_rules! debug {
                     .set_bold(true),
             )
             .unwrap();
-        writeln!(&mut stream, "[{} {}] {}", now, rall::Level::DEBUG, $str).unwrap();
+        writeln!(&mut stream, "[{} {}] {}", now, rall::Level::DEBUG, format_args!($($arg)*)).unwrap();
         stream.reset().unwrap();
     }};
 }
@@ -228,7 +228,7 @@ macro_rules! debug {
 /// ```
 #[macro_export]
 macro_rules! info {
-    ($str:expr) => {
+    ($($arg:tt)*) => {
         use std::io::Write;
         use termcolor::WriteColor;
 
@@ -241,7 +241,7 @@ macro_rules! info {
                     .set_bold(true),
             )
             .unwrap();
-        writeln!(&mut stream, "[{} {}] {}", now, rall::Level::INFO, $str).unwrap();
+        writeln!(&mut stream, "[{} {}] {}", now, rall::Level::INFO, format_args!($($arg)*)).unwrap();
         stream.reset().unwrap();
     };
 }
@@ -264,7 +264,7 @@ macro_rules! info {
 /// ```
 #[macro_export]
 macro_rules! warn {
-    ($str:expr) => {{
+    ($($arg:tt)*) => {{
         use std::io::Write;
         use termcolor::WriteColor;
 
@@ -277,7 +277,7 @@ macro_rules! warn {
                     .set_bold(true),
             )
             .unwrap();
-        writeln!(&mut stream, "[{} {}] {}", now, rall::Level::WARN, $str).unwrap();
+        writeln!(&mut stream, "[{} {}] {}", now, rall::Level::WARN, format_args!($($arg)*)).unwrap();
         stream.reset().unwrap();
     }};
 }
@@ -300,7 +300,7 @@ macro_rules! warn {
 /// ```
 #[macro_export]
 macro_rules! error {
-    ($str:expr) => {{
+    ($($arg:tt)*) => {{
         use std::io::Write;
         use termcolor::WriteColor;
 
@@ -313,7 +313,7 @@ macro_rules! error {
                     .set_intense(true),
             )
             .unwrap();
-        writeln!(&mut stream, "[{} {}] {}", now, rall::Level::ERROR, $str).unwrap();
+        writeln!(&mut stream, "[{} {}] {}", now, rall::Level::ERROR, format_args!($($arg)*)).unwrap();
         stream.reset().unwrap();
     }};
 }
@@ -336,7 +336,7 @@ macro_rules! error {
 /// ```
 #[macro_export]
 macro_rules! fatal {
-    ($str:expr) => {{
+    ($($arg:tt)*) => {{
         use std::io::Write;
         use termcolor::WriteColor;
 
@@ -349,7 +349,7 @@ macro_rules! fatal {
                     .set_bold(true),
             )
             .unwrap();
-        writeln!(&mut stream, "[{} {}] {}", now, rall::Level::FATAL, $str).unwrap();
+        writeln!(&mut stream, "[{} {}] {}", now, rall::Level::FATAL, format_args!($($arg)*)).unwrap();
         stream.reset().unwrap();
     }};
 }
