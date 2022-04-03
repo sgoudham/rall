@@ -28,12 +28,12 @@ This is to allow hassle-free and painless setup that will let you log instantly!
 use rall::{debug, error, fatal, info, trace, warn};
 
 // Log Out To Standard Output
-trace!("My Best Friend Hazel :D");
-debug!("My Best Friend Hazel :D");
-info!("My Best Friend Hazel :D");
-warn!("My Best Friend Hazel :D");
-error!("My Best Friend Hazel :D");
-fatal!("My Best Friend Hazel :D");
+trace!("My Best Friend Hazel {}", ":D");
+debug!("My Best Friend Hazel {}", ":D");
+info!("My Best Friend Hazel {}", ":D");
+warn!("My Best Friend Hazel {}", ":D");
+error!("My Best Friend Hazel {}", ":D");
+fatal!("My Best Friend Hazel {}", ":D");
 ```
 
 ### Windows Output
