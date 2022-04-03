@@ -184,8 +184,20 @@ macro_rules! debug {
 #[macro_export]
 macro_rules! info {
     ($str:expr) => {
+        use std::io::Write;
+        use termcolor::WriteColor;
+
         let now = chrono::Utc::now().format("%Y-%M-%dT%H:%M:%S%z");
-        println!("{}", format!("[{} {}] {}", now, rall::Level::INFO, $str));
+        let mut stream = termcolor::StandardStream::stdout(termcolor::ColorChoice::Always);
+        stream
+            .set_color(
+                termcolor::ColorSpec::new()
+                    .set_fg(Some(termcolor::Color::White))
+                    .set_bold(true),
+            )
+            .unwrap();
+        writeln!(&mut stream, "[{} {}] {}", now, rall::Level::INFO, $str).unwrap();
+        stream.reset().unwrap();
     };
 }
 
