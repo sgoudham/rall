@@ -54,9 +54,6 @@ doc =::embed_doc_image::embed_image ! ("unix_logs", "images/unix_logs.png")))]
 //! easy to understand API design that users can instantly get started with.
 
 use std::fmt::{Display, Formatter};
-use std::io::Write;
-
-use termcolor::{Color, ColorChoice, ColorSpec, StandardStream, WriteColor};
 
 /// TODO
 pub enum Level {
@@ -90,9 +87,11 @@ macro_rules! trace {
         let now = chrono::Utc::now().format("%Y-%M-%dT%H:%M:%S%z");
         let mut stream = termcolor::StandardStream::stdout(termcolor::ColorChoice::Always);
         stream
-            .set_color(termcolor::ColorSpec::new()
-            .set_fg(Some(termcolor::Color::Blue))
-            .set_bold(true))
+            .set_color(
+                termcolor::ColorSpec::new()
+                    .set_fg(Some(termcolor::Color::Blue))
+                    .set_bold(true),
+            )
             .unwrap();
         writeln!(&mut stream, "[{} {}] {}", now, rall::Level::TRACE, $str).unwrap();
         stream.reset().unwrap();
@@ -108,9 +107,11 @@ macro_rules! debug {
         let now = chrono::Utc::now().format("%Y-%M-%dT%H:%M:%S%z");
         let mut stream = termcolor::StandardStream::stdout(termcolor::ColorChoice::Always);
         stream
-            .set_color(termcolor::ColorSpec::new()
-            .set_fg(Some(termcolor::Color::Green))
-            .set_bold(true))
+            .set_color(
+                termcolor::ColorSpec::new()
+                    .set_fg(Some(termcolor::Color::Green))
+                    .set_bold(true),
+            )
             .unwrap();
         writeln!(&mut stream, "[{} {}] {}", now, rall::Level::DEBUG, $str).unwrap();
         stream.reset().unwrap();
@@ -134,9 +135,11 @@ macro_rules! warn {
         let now = chrono::Utc::now().format("%Y-%M-%dT%H:%M:%S%z");
         let mut stream = termcolor::StandardStream::stdout(termcolor::ColorChoice::Always);
         stream
-            .set_color(termcolor::ColorSpec::new()
-            .set_fg(Some(termcolor::Color::Yellow))
-            .set_bold(true))
+            .set_color(
+                termcolor::ColorSpec::new()
+                    .set_fg(Some(termcolor::Color::Yellow))
+                    .set_bold(true),
+            )
             .unwrap();
         writeln!(&mut stream, "[{} {}] {}", now, rall::Level::WARN, $str).unwrap();
         stream.reset().unwrap();
@@ -152,9 +155,11 @@ macro_rules! error {
         let now = chrono::Utc::now().format("%Y-%M-%dT%H:%M:%S%z");
         let mut stream = termcolor::StandardStream::stdout(termcolor::ColorChoice::Always);
         stream
-            .set_color(termcolor::ColorSpec::new()
-            .set_fg(Some(termcolor::Color::Red))
-            .set_intense(true))
+            .set_color(
+                termcolor::ColorSpec::new()
+                    .set_fg(Some(termcolor::Color::Red))
+                    .set_intense(true),
+            )
             .unwrap();
         writeln!(&mut stream, "[{} {}] {}", now, rall::Level::ERROR, $str).unwrap();
         stream.reset().unwrap();
@@ -170,9 +175,11 @@ macro_rules! fatal {
         let now = chrono::Utc::now().format("%Y-%M-%dT%H:%M:%S%z");
         let mut stream = termcolor::StandardStream::stdout(termcolor::ColorChoice::Always);
         stream
-            .set_color(termcolor::ColorSpec::new()
-            .set_fg(Some(termcolor::Color::Red))
-            .set_bold(true))
+            .set_color(
+                termcolor::ColorSpec::new()
+                    .set_fg(Some(termcolor::Color::Red))
+                    .set_bold(true),
+            )
             .unwrap();
         writeln!(&mut stream, "[{} {}] {}", now, rall::Level::FATAL, $str).unwrap();
         stream.reset().unwrap();
