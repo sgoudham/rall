@@ -1,11 +1,10 @@
-use rall::{Level, SimpleLogger};
+use rall::{debug, error, fatal, info, Level, SimpleLogger, trace, warn};
 
 fn main() {
-    let mut logger = SimpleLogger::default();
-    logger.log(Level::TRACE, "My Best Friend Hazel :D");
-    logger.log(Level::DEBUG, "My Best Friend Hazel :D");
-    logger.log(Level::INFO, "My Best Friend Hazel :D");
-    logger.log(Level::WARN, "My Best Friend Hazel :D");
-    logger.log(Level::ERROR, "My Best Friend Hazel :D");
-    logger.log(Level::FATAL, "My Best Friend Hazel :D");
+    trace!("My Best Friend Hazel :D");
+    debug!("My Best Friend Hazel :D");
+    info!("My Best Friend Hazel :D");
+    warn!("My Best Friend Hazel :D");
+    error!("My Best Friend Hazel :D");
+    fatal!("My Best Friend Hazel :D");
 }

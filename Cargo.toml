@@ -12,6 +12,7 @@ categories = ["development-tools::debugging"]
 exclude = [".github/**"]
 
 [dependencies]
+chrono = "0.4.19"
 embed-doc-image = "0.1.4"
 termcolor = "1.1.3"
 
