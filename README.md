@@ -21,6 +21,9 @@ And much more to come... soon™!
 
 ## Quick Start
 
+For the fastest setup possible, declarative macros are exposed that have a predefined format.
+This is to allow hassle-free and painless setup that will let you log instantly!
+
 ```rust
 use rall::{debug, error, fatal, info, trace, warn};
 

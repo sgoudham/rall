@@ -36,8 +36,8 @@
 //!
 #![cfg_attr(feature = "doc-images",
 cfg_attr(all(),
-doc =::embed_doc_image::embed_image ! ("windows_logs", "images/windows_logs.png"),
-doc =::embed_doc_image::embed_image ! ("unix_logs", "images/unix_logs.png")))]
+doc = ::embed_doc_image::embed_image!("windows_logs", "images/windows_logs.png"),
+doc = ::embed_doc_image::embed_image!("unix_logs", "images/unix_logs.png")))]
 //!
 //! ### Windows Output
 //!
@@ -141,6 +141,21 @@ impl Display for Level {
     }
 }
 
+/// # Usage
+///
+/// For fine-grained information, only within rare cases where full visibility of what is
+/// happening in your application is needed.
+///
+/// # Colour
+///
+/// Blue
+///
+/// # Example
+///
+/// ```rust
+/// # use rall::trace;
+/// trace!("Hazel!");
+/// ```
 #[macro_export]
 macro_rules! trace {
     ($str:expr) => {{
@@ -161,6 +176,21 @@ macro_rules! trace {
     }};
 }
 
+/// # Usage
+///
+/// Less granular when compared to [`TRACE`](Level::TRACE) but still more than what is needed
+/// for normal use. This should be used for diagnosing issues and/or troubleshooting.
+///
+/// # Colour
+///
+/// Green
+///
+/// # Example
+///
+/// ```rust
+/// # use rall::debug;
+/// debug!("Hazel!");
+/// ```
 #[macro_export]
 macro_rules! debug {
     ($str:expr) => {{
@@ -181,6 +211,21 @@ macro_rules! debug {
     }};
 }
 
+/// # Usage
+///
+/// Standard log level indicating that something has happened, all logs using [`INFO`](Level::INFO)
+/// should be _purely informational_ and not require any further investigation.
+///
+/// # Colour
+///
+/// White
+///
+/// # Example
+///
+/// ```rust
+/// # use rall::info;
+/// info!("Hazel!");
+/// ```
 #[macro_export]
 macro_rules! info {
     ($str:expr) => {
@@ -201,6 +246,22 @@ macro_rules! info {
     };
 }
 
+/// # Usage
+///
+/// Indicates that something _unexpected_ has happened within the program. This could represent
+/// many things such as a problem or a simple disturbance. This should be used when something
+/// unexpected has happened BUT the code can still continue to work.
+///
+/// # Colour
+///
+/// Yellow
+///
+/// # Example
+///
+/// ```rust
+/// # use rall::warn;
+/// warn!("Hazel!");
+/// ```
 #[macro_export]
 macro_rules! warn {
     ($str:expr) => {{
@@ -221,6 +282,22 @@ macro_rules! warn {
     }};
 }
 
+/// # Usage
+///
+/// Indicates that the program has hit an issue that is preventing one or more functionalities
+/// from properly functioning. This should be used when the application is currently displaying
+/// incorrect behaviour that _needs_ to get fixed.
+///
+/// # Colour
+///
+/// Dark Red
+///
+/// # Example
+///
+/// ```rust
+/// # use rall::error;
+/// error!("Hazel!");
+/// ```
 #[macro_export]
 macro_rules! error {
     ($str:expr) => {{
@@ -241,6 +318,22 @@ macro_rules! error {
     }};
 }
 
+/// # Usage
+///
+/// Indicates that the program has entered a state in which it has lost _critical business
+/// functionality_ and cannot be used in production anymore. This should be used when the
+/// program is in **URGENT** need of attention and absolutely should not be in a live environment.
+///
+/// # Colour
+///
+/// Red
+///
+/// # Example
+///
+/// ```rust
+/// # use rall::fatal;
+/// fatal!("Hazel!");
+/// ```
 #[macro_export]
 macro_rules! fatal {
     ($str:expr) => {{
