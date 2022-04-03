@@ -12,7 +12,7 @@
 //! - [x] Logging Levels
 //! - [x] Datetime & Coloured Output
 //! - [ ] Options for Datetime, Current Function, Line Number, Custom Colours, etc.
-//! - [ ] Custom Formatting
+//! - [x] Custom Formatting
 //! - [ ] File support
 //!
 //! And much more to come... soon™!
@@ -171,7 +171,7 @@ macro_rules! trace {
                     .set_bold(true),
             )
             .unwrap();
-        writeln!(&mut stream, "[{} {}] {}", now, rall::Level::TRACE, format!($($arg)*)).unwrap();
+        writeln!(&mut stream, "[{} {}] {}", now, rall::Level::TRACE, format_args!($($arg)*)).unwrap();
         stream.reset().unwrap();
     }};
 }
@@ -206,7 +206,7 @@ macro_rules! debug {
                     .set_bold(true),
             )
             .unwrap();
-        writeln!(&mut stream, "[{} {}] {}", now, rall::Level::DEBUG, format!($($arg)*)).unwrap();
+        writeln!(&mut stream, "[{} {}] {}", now, rall::Level::DEBUG, format_args!($($arg)*)).unwrap();
         stream.reset().unwrap();
     }};
 }
@@ -241,7 +241,7 @@ macro_rules! info {
                     .set_bold(true),
             )
             .unwrap();
-        writeln!(&mut stream, "[{} {}] {}", now, rall::Level::INFO, format!($($arg)*)).unwrap();
+        writeln!(&mut stream, "[{} {}] {}", now, rall::Level::INFO, format_args!($($arg)*)).unwrap();
         stream.reset().unwrap();
     };
 }
@@ -277,7 +277,7 @@ macro_rules! warn {
                     .set_bold(true),
             )
             .unwrap();
-        writeln!(&mut stream, "[{} {}] {}", now, rall::Level::WARN, format!($($arg)*)).unwrap();
+        writeln!(&mut stream, "[{} {}] {}", now, rall::Level::WARN, format_args!($($arg)*)).unwrap();
         stream.reset().unwrap();
     }};
 }
@@ -313,7 +313,7 @@ macro_rules! error {
                     .set_intense(true),
             )
             .unwrap();
-        writeln!(&mut stream, "[{} {}] {}", now, rall::Level::ERROR, format!($($arg)*)).unwrap();
+        writeln!(&mut stream, "[{} {}] {}", now, rall::Level::ERROR, format_args!($($arg)*)).unwrap();
         stream.reset().unwrap();
     }};
 }
@@ -349,7 +349,7 @@ macro_rules! fatal {
                     .set_bold(true),
             )
             .unwrap();
-        writeln!(&mut stream, "[{} {}] {}", now, rall::Level::FATAL, format!($($arg)*)).unwrap();
+        writeln!(&mut stream, "[{} {}] {}", now, rall::Level::FATAL, format_args!($($arg)*)).unwrap();
         stream.reset().unwrap();
     }};
 }
