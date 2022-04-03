@@ -10,7 +10,7 @@
 //! ## Feature Set
 //!
 //! - [x] Logging Levels
-//! - [x] Coloured Output
+//! - [x] Datetime & Coloured Output
 //! - [ ] Options for Datetime, Current Function, Line Number, Custom Colours, etc.
 //! - [ ] Custom Formatting
 //! - [ ] File support
@@ -19,19 +19,19 @@
 //!
 //! ## Quick Start
 //!
-//! ```rust
-//! use rall::{SimpleLogger, Level};
+//! For the fastest setup possible, declarative macros are exposed that have a predefined format.
+//! This is to allow hassle-free and painless setup that will let you log instantly!
 //!
-//! // Create Default SimpleLogger
-//! let mut logger = SimpleLogger::default();
+//! ```rust
+//! use rall::{debug, error, fatal, info, trace, warn};
 //!
 //! // Log Out To Standard Output
-//! logger.log(Level::TRACE, "My Best Friend Hazel :D");
-//! logger.log(Level::DEBUG, "My Best Friend Hazel :D");
-//! logger.log(Level::INFO, "My Best Friend Hazel :D");
-//! logger.log(Level::WARN, "My Best Friend Hazel :D");
-//! logger.log(Level::ERROR, "My Best Friend Hazel :D");
-//! logger.log(Level::FATAL, "My Best Friend Hazel :D");
+//! trace!("My Best Friend Hazel :D");
+//! debug!("My Best Friend Hazel :D");
+//! info!("My Best Friend Hazel :D");
+//! warn!("My Best Friend Hazel :D");
+//! error!("My Best Friend Hazel :D");
+//! fatal!("My Best Friend Hazel :D");
 //! ```
 //!
 #![cfg_attr(feature = "doc-images",
@@ -50,90 +50,306 @@ doc = ::embed_doc_image::embed_image!("unix_logs", "images/unix_logs.png")))]
 //! ### Author Notes
 //!
 //! I'm still incredibly early in my Rust journey and so I wanted to get comfortable and try to pick
-//! my own brain about exposing different API's in a Rust crate. I hope to expose an intuitive and
+//! my own brain about exposing different APIs in a Rust crate. I hope to expose an intuitive and
 //! easy to understand API design that users can instantly get started with.
 
 use std::fmt::{Display, Formatter};
-use std::io::Write;
-use termcolor::{Color, ColorChoice, ColorSpec, StandardStream, WriteColor};
 
-/// TODO
+/// Represents all the possible logging levels:
+///
+/// **TRACE**,
+/// **DEBUG**,
+/// **INFO**,
+/// **WARN**,
+/// **ERROR**,
+/// **FATAL**
 pub enum Level {
+    /// # Usage
+    ///
+    /// For fine-grained information, only within rare cases where full visibility of what is
+    /// happening in your application is needed.
+    ///
+    /// # Colour
+    ///
+    /// Blue
     TRACE,
+
+    /// # Usage
+    ///
+    /// Less granular when compared to [`TRACE`](Level::TRACE) but still more than what is needed
+    /// for normal use. This should be used for diagnosing issues and/or troubleshooting.
+    ///
+    /// # Colour
+    ///
+    /// Green
     DEBUG,
+
+    /// # Usage
+    ///
+    /// Standard log level indicating that something has happened, all logs using [`INFO`](Level::INFO)
+    /// should be _purely informational_ and not require any further investigation.
+    ///
+    /// # Colour
+    ///
+    /// White
     INFO,
+
+    /// # Usage
+    ///
+    /// Indicates that something _unexpected_ has happened within the program. This could represent
+    /// many things such as a problem or a simple disturbance. This should be used when something
+    /// unexpected has happened BUT the code can still continue to work.
+    ///
+    /// # Colour
+    ///
+    /// Yellow
     WARN,
+
+    /// # Usage
+    ///
+    /// Indicates that the program has hit an issue that is preventing one or more functionalities
+    /// from properly functioning. This should be used when the application is currently displaying
+    /// incorrect behaviour that _needs_ to get fixed.
+    ///
+    /// # Colour
+    ///
+    /// Dark Red
     ERROR,
+
+    /// # Usage
+    ///
+    /// Indicates that the program has entered a state in which it has lost _critical business
+    /// functionality_ and cannot be used in production anymore. This should be used when the
+    /// program is in **URGENT** need of attention and absolutely should not be in a live environment.
+    ///
+    /// # Colour
+    ///
+    /// Red
     FATAL,
 }
 
 impl Display for Level {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match self {
-            Level::TRACE => write!(f, "[TRACE]"),
-            Level::DEBUG => write!(f, "[DEBUG]"),
-            Level::INFO => write!(f, "[INFO]"),
-            Level::WARN => write!(f, "[WARN]"),
-            Level::ERROR => write!(f, "[ERROR]"),
-            Level::FATAL => write!(f, "[FATAL]"),
+            Level::TRACE => write!(f, "TRACE"),
+            Level::DEBUG => write!(f, "DEBUG"),
+            Level::INFO => write!(f, "INFO"),
+            Level::WARN => write!(f, "WARN"),
+            Level::ERROR => write!(f, "ERROR"),
+            Level::FATAL => write!(f, "FATAL"),
         }
     }
 }
 
-/// TODO
-pub struct SimpleLogger {
-    standard_stream: StandardStream,
+/// # Usage
+///
+/// For fine-grained information, only within rare cases where full visibility of what is
+/// happening in your application is needed.
+///
+/// # Colour
+///
+/// Blue
+///
+/// # Example
+///
+/// ```rust
+/// # use rall::trace;
+/// trace!("Hazel!");
+/// ```
+#[macro_export]
+macro_rules! trace {
+    ($str:expr) => {{
+        use std::io::Write;
+        use termcolor::WriteColor;
+
+        let now = chrono::Utc::now().format("%Y-%M-%dT%H:%M:%S%z");
+        let mut stream = termcolor::StandardStream::stdout(termcolor::ColorChoice::Always);
+        stream
+            .set_color(
+                termcolor::ColorSpec::new()
+                    .set_fg(Some(termcolor::Color::Blue))
+                    .set_bold(true),
+            )
+            .unwrap();
+        writeln!(&mut stream, "[{} {}] {}", now, rall::Level::TRACE, $str).unwrap();
+        stream.reset().unwrap();
+    }};
 }
 
-impl Default for SimpleLogger {
-    fn default() -> Self {
-        Self {
-            standard_stream: StandardStream::stdout(ColorChoice::Always),
-        }
-    }
+/// # Usage
+///
+/// Less granular when compared to [`TRACE`](Level::TRACE) but still more than what is needed
+/// for normal use. This should be used for diagnosing issues and/or troubleshooting.
+///
+/// # Colour
+///
+/// Green
+///
+/// # Example
+///
+/// ```rust
+/// # use rall::debug;
+/// debug!("Hazel!");
+/// ```
+#[macro_export]
+macro_rules! debug {
+    ($str:expr) => {{
+        use std::io::Write;
+        use termcolor::WriteColor;
+
+        let now = chrono::Utc::now().format("%Y-%M-%dT%H:%M:%S%z");
+        let mut stream = termcolor::StandardStream::stdout(termcolor::ColorChoice::Always);
+        stream
+            .set_color(
+                termcolor::ColorSpec::new()
+                    .set_fg(Some(termcolor::Color::Green))
+                    .set_bold(true),
+            )
+            .unwrap();
+        writeln!(&mut stream, "[{} {}] {}", now, rall::Level::DEBUG, $str).unwrap();
+        stream.reset().unwrap();
+    }};
 }
 
-/// TODO
-impl SimpleLogger {
-    /// TODO
-    pub fn new(standard_stream: StandardStream) -> Self {
-        Self { standard_stream }
-    }
+/// # Usage
+///
+/// Standard log level indicating that something has happened, all logs using [`INFO`](Level::INFO)
+/// should be _purely informational_ and not require any further investigation.
+///
+/// # Colour
+///
+/// White
+///
+/// # Example
+///
+/// ```rust
+/// # use rall::info;
+/// info!("Hazel!");
+/// ```
+#[macro_export]
+macro_rules! info {
+    ($str:expr) => {
+        use std::io::Write;
+        use termcolor::WriteColor;
 
-    /// TODO
-    pub fn log(&mut self, level: Level, str: &str) {
-        self.set_colour(&level);
-        writeln!(&mut self.standard_stream, "{} {}", level, str).unwrap();
-        self.standard_stream.reset().unwrap();
-    }
+        let now = chrono::Utc::now().format("%Y-%M-%dT%H:%M:%S%z");
+        let mut stream = termcolor::StandardStream::stdout(termcolor::ColorChoice::Always);
+        stream
+            .set_color(
+                termcolor::ColorSpec::new()
+                    .set_fg(Some(termcolor::Color::White))
+                    .set_bold(true),
+            )
+            .unwrap();
+        writeln!(&mut stream, "[{} {}] {}", now, rall::Level::INFO, $str).unwrap();
+        stream.reset().unwrap();
+    };
+}
 
-    /// TODO
-    fn set_colour(&mut self, logging_level: &Level) {
-        match logging_level {
-            Level::TRACE => self
-                .standard_stream
-                .set_color(ColorSpec::new().set_fg(Some(Color::Blue)).set_bold(true))
-                .unwrap(),
-            Level::DEBUG => self
-                .standard_stream
-                .set_color(ColorSpec::new().set_fg(Some(Color::Green)).set_bold(true))
-                .unwrap(),
-            Level::INFO => self
-                .standard_stream
-                .set_color(ColorSpec::new().set_fg(None))
-                .unwrap(),
-            Level::WARN => self
-                .standard_stream
-                .set_color(ColorSpec::new().set_fg(Some(Color::Yellow)).set_bold(true))
-                .unwrap(),
-            Level::ERROR => self
-                .standard_stream
-                .set_color(ColorSpec::new().set_fg(Some(Color::Red)).set_intense(true))
-                .unwrap(),
-            Level::FATAL => self
-                .standard_stream
-                .set_color(ColorSpec::new().set_fg(Some(Color::Red)).set_bold(true))
-                .unwrap(),
-        }
-    }
+/// # Usage
+///
+/// Indicates that something _unexpected_ has happened within the program. This could represent
+/// many things such as a problem or a simple disturbance. This should be used when something
+/// unexpected has happened BUT the code can still continue to work.
+///
+/// # Colour
+///
+/// Yellow
+///
+/// # Example
+///
+/// ```rust
+/// # use rall::warn;
+/// warn!("Hazel!");
+/// ```
+#[macro_export]
+macro_rules! warn {
+    ($str:expr) => {{
+        use std::io::Write;
+        use termcolor::WriteColor;
+
+        let now = chrono::Utc::now().format("%Y-%M-%dT%H:%M:%S%z");
+        let mut stream = termcolor::StandardStream::stdout(termcolor::ColorChoice::Always);
+        stream
+            .set_color(
+                termcolor::ColorSpec::new()
+                    .set_fg(Some(termcolor::Color::Yellow))
+                    .set_bold(true),
+            )
+            .unwrap();
+        writeln!(&mut stream, "[{} {}] {}", now, rall::Level::WARN, $str).unwrap();
+        stream.reset().unwrap();
+    }};
+}
+
+/// # Usage
+///
+/// Indicates that the program has hit an issue that is preventing one or more functionalities
+/// from properly functioning. This should be used when the application is currently displaying
+/// incorrect behaviour that _needs_ to get fixed.
+///
+/// # Colour
+///
+/// Dark Red
+///
+/// # Example
+///
+/// ```rust
+/// # use rall::error;
+/// error!("Hazel!");
+/// ```
+#[macro_export]
+macro_rules! error {
+    ($str:expr) => {{
+        use std::io::Write;
+        use termcolor::WriteColor;
+
+        let now = chrono::Utc::now().format("%Y-%M-%dT%H:%M:%S%z");
+        let mut stream = termcolor::StandardStream::stdout(termcolor::ColorChoice::Always);
+        stream
+            .set_color(
+                termcolor::ColorSpec::new()
+                    .set_fg(Some(termcolor::Color::Red))
+                    .set_intense(true),
+            )
+            .unwrap();
+        writeln!(&mut stream, "[{} {}] {}", now, rall::Level::ERROR, $str).unwrap();
+        stream.reset().unwrap();
+    }};
+}
+
+/// # Usage
+///
+/// Indicates that the program has entered a state in which it has lost _critical business
+/// functionality_ and cannot be used in production anymore. This should be used when the
+/// program is in **URGENT** need of attention and absolutely should not be in a live environment.
+///
+/// # Colour
+///
+/// Red
+///
+/// # Example
+///
+/// ```rust
+/// # use rall::fatal;
+/// fatal!("Hazel!");
+/// ```
+#[macro_export]
+macro_rules! fatal {
+    ($str:expr) => {{
+        use std::io::Write;
+        use termcolor::WriteColor;
+
+        let now = chrono::Utc::now().format("%Y-%M-%dT%H:%M:%S%z");
+        let mut stream = termcolor::StandardStream::stdout(termcolor::ColorChoice::Always);
+        stream
+            .set_color(
+                termcolor::ColorSpec::new()
+                    .set_fg(Some(termcolor::Color::Red))
+                    .set_bold(true),
+            )
+            .unwrap();
+        writeln!(&mut stream, "[{} {}] {}", now, rall::Level::FATAL, $str).unwrap();
+        stream.reset().unwrap();
+    }};
 }
