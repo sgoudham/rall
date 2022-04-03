@@ -36,8 +36,8 @@
 //!
 #![cfg_attr(feature = "doc-images",
 cfg_attr(all(),
-doc = ::embed_doc_image::embed_image!("windows_logs", "images/windows_logs.png"),
-doc = ::embed_doc_image::embed_image!("unix_logs", "images/unix_logs.png")))]
+doc =::embed_doc_image::embed_image ! ("windows_logs", "images/windows_logs.png"),
+doc =::embed_doc_image::embed_image ! ("unix_logs", "images/unix_logs.png")))]
 //!
 //! ### Windows Output
 //!
@@ -94,7 +94,7 @@ macro_rules! trace {
             .set_fg(Some(termcolor::Color::Blue))
             .set_bold(true))
             .unwrap();
-        writeln!(&mut stream, "[{} {}] {}", now, Level::TRACE, $str).unwrap();
+        writeln!(&mut stream, "[{} {}] {}", now, rall::Level::TRACE, $str).unwrap();
         stream.reset().unwrap();
     }};
 }
@@ -112,7 +112,7 @@ macro_rules! debug {
             .set_fg(Some(termcolor::Color::Green))
             .set_bold(true))
             .unwrap();
-        writeln!(&mut stream, "[{} {}] {}", now, Level::DEBUG, $str).unwrap();
+        writeln!(&mut stream, "[{} {}] {}", now, rall::Level::DEBUG, $str).unwrap();
         stream.reset().unwrap();
     }};
 }
@@ -121,7 +121,7 @@ macro_rules! debug {
 macro_rules! info {
     ($str:expr) => {
         let now = chrono::Utc::now().format("%Y-%M-%dT%H:%M:%S%z");
-        println!("{}", format!("[{} {}] {}", now, Level::INFO, $str));
+        println!("{}", format!("[{} {}] {}", now, rall::Level::INFO, $str));
     };
 }
 
@@ -138,7 +138,7 @@ macro_rules! warn {
             .set_fg(Some(termcolor::Color::Yellow))
             .set_bold(true))
             .unwrap();
-        writeln!(&mut stream, "[{} {}] {}", now, Level::WARN, $str).unwrap();
+        writeln!(&mut stream, "[{} {}] {}", now, rall::Level::WARN, $str).unwrap();
         stream.reset().unwrap();
     }};
 }
@@ -156,7 +156,7 @@ macro_rules! error {
             .set_fg(Some(termcolor::Color::Red))
             .set_intense(true))
             .unwrap();
-        writeln!(&mut stream, "[{} {}] {}", now, Level::ERROR, $str).unwrap();
+        writeln!(&mut stream, "[{} {}] {}", now, rall::Level::ERROR, $str).unwrap();
         stream.reset().unwrap();
     }};
 }
@@ -174,62 +174,7 @@ macro_rules! fatal {
             .set_fg(Some(termcolor::Color::Red))
             .set_bold(true))
             .unwrap();
-        writeln!(&mut stream, "[{} {}] {}", now, Level::FATAL, $str).unwrap();
+        writeln!(&mut stream, "[{} {}] {}", now, rall::Level::FATAL, $str).unwrap();
         stream.reset().unwrap();
     }};
-}
-
-/// TODO
-pub struct SimpleLogger {
-    standard_stream: StandardStream,
-}
-
-impl Default for SimpleLogger {
-    fn default() -> Self {
-        Self {
-            standard_stream: StandardStream::stdout(ColorChoice::Always),
-        }
-    }
-}
-
-/// TODO
-impl SimpleLogger {
-    /// TODO
-    pub fn new(standard_stream: StandardStream) -> Self {
-        Self { standard_stream }
-    }
-
-    /// TODO
-    pub fn log(&mut self, level: Level, str: &str) {
-        self.set_colour(&level);
-        writeln!(&mut self.standard_stream, "{} {}", level, str).unwrap();
-        self.standard_stream.reset().unwrap();
-    }
-
-    /// TODO
-    fn set_colour(&mut self, logging_level: &Level) {
-        match logging_level {
-            Level::TRACE => self
-                .standard_stream
-                .set_color(ColorSpec::new().set_fg(Some(Color::Blue)).set_bold(true))
-                .unwrap(),
-            Level::DEBUG => self
-                .standard_stream
-                .set_color(ColorSpec::new().set_fg(Some(Color::Green)).set_bold(true))
-                .unwrap(),
-            Level::INFO => {}
-            Level::WARN => self
-                .standard_stream
-                .set_color(ColorSpec::new().set_fg(Some(Color::Yellow)).set_bold(true))
-                .unwrap(),
-            Level::ERROR => self
-                .standard_stream
-                .set_color(ColorSpec::new().set_fg(Some(Color::Red)).set_intense(true))
-                .unwrap(),
-            Level::FATAL => self
-                .standard_stream
-                .set_color(ColorSpec::new().set_fg(Some(Color::Red)).set_bold(true))
-                .unwrap(),
-        }
-    }
 }

@@ -1,4 +1,4 @@
-use rall::{debug, error, fatal, info, Level, SimpleLogger, trace, warn};
+use rall::{debug, error, fatal, info, trace, warn};
 
 fn main() {
     trace!("My Best Friend Hazel :D");
